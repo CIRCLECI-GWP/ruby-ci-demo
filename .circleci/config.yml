@@ -25,6 +25,7 @@ jobs:
       - checkout
       - run: bundle install
       - run: bundle exec rspec spec/
+      - run: apt-cache policy wget
 
   run-tests-on-ubuntu-2004:
     executor: ubuntu_20-04-executor
@@ -47,7 +48,7 @@ jobs:
 
 commands:
   install-wget:
-    description: "Install the wget client"
+    description: "Install the latest wget client"
     parameters:
       version:
         type: string
