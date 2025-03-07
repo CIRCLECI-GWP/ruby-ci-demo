@@ -1,0 +1,42 @@
+version: 2.1
+
+executors:
+  docker-executor:
+    docker:
+      - image: cimg/ruby:3.4.2-browsers
+  ubuntu_20-04-executor:
+    machine:
+      image: "ubuntu-2004:current"
+
+jobs:
+  build_artifact:
+    parameters:
+      parallelism_qty:
+        type: integer
+        default: 1
+    parallelism: << parameters.parallelism_qty >>
+    executor: ubuntu_20-04-executor
+    steps:
+      - checkout
+
+  run-tests-on-docker:
+    executor: docker-executor
+    steps:
+      - checkout
+      - run: bundle install
+      - run: bundle exec rspec spec/
+
+  run-tests-on-ubuntu-2004:
+    executor: ubuntu_20-04-executor
+    steps:
+      - checkout
+      - run: bundle install
+      - run: bundle exec rspec spec/
+
+workflows:
+  build_and_test:
+    jobs:
+      - build_artifact:
+          parallelism_qty: 2
+      - run-tests-on-docker
+      - run-tests-on-ubuntu-2004

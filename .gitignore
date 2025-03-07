@@ -1,0 +1,50 @@
+# Ignore system files
+.DS_Store
+*.swp
+*.swo
+
+# Ignore Bundler dependencies
+/vendor/bundle
+/.bundle
+Gemfile.lock
+
+# Ignore logs and temporary files
+log/*
+tmp/*
+coverage/
+
+# Ignore test artifacts
+rspec/
+test-results/
+*.log
+
+# Ignore Editor/IDE files
+.idea/
+.vscode/
+*.iml
+
+# Ignore CircleCI working directories
+.circleci/cache/
+.circleci/results/
+
+# Ignore Docker build files
+*.dockerfile
+*.dockerignore
+docker-compose.override.yml
+
+# Ignore compiled Ruby files
+*.rbc
+.byebug_history
+
+# Ignore Node modules (if JavaScript is added)
+node_modules/
+
+# Ignore env files (security)
+.env
+.env.local
+.env.test
+.env.production
+.envrc
+
+# Ignore any other system-generated files
+*.bak
