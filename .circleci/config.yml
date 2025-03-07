@@ -33,10 +33,37 @@ jobs:
       - run: bundle install
       - run: bundle exec rspec spec/
 
+  test-web-site:
+    docker:
+      - image: "cimg/base:stable"
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - install-wget:
+          version: "1.17.0-1ubuntu1"
+      - run: wget --spider https://www.circleci.com
+
+commands:
+  install-wget:
+    description: "Install the wget client"
+    parameters:
+      version:
+        type: string
+        default: "1.20.3-1ubuntu1"
+    steps:
+      - run: sudo apt install -y wget=<< parameters.version >>
+
 workflows:
-  build_and_test:
+  build_workflow:
     jobs:
       - build_artifact:
           parallelism_qty: 2
+  test-app-on-diff-os:
+    jobs:
       - run-tests-on-docker
       - run-tests-on-ubuntu-2004
+  run-tests:
+    jobs:
+      - test-web-site
