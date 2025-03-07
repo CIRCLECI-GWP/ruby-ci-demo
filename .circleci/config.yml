@@ -25,7 +25,6 @@ jobs:
       - checkout
       - run: bundle install
       - run: bundle exec rspec spec/
-      - run: apt-cache policy wget
 
   run-tests-on-ubuntu-2004:
     executor: ubuntu_20-04-executor
@@ -43,7 +42,7 @@ jobs:
     steps:
       - checkout
       - install-wget:
-          version: "1.17.0-1ubuntu1"
+          version: "1.21.2-2ubuntu1"
       - run: wget --spider https://www.circleci.com
 
 commands:
@@ -52,7 +51,7 @@ commands:
     parameters:
       version:
         type: string
-        default: "1.20.3-1ubuntu1"
+        default: "1.21.2-2ubuntu1"
     steps:
       - run: sudo apt install -y wget=<< parameters.version >>
 
