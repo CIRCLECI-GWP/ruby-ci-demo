@@ -47,12 +47,13 @@ jobs:
 
 commands:
   install-wget:
-    description: "Install the latest wget client"
+    description: "Install the wget client"
     parameters:
       version:
         type: string
         default: "1.21.2-2ubuntu1"
     steps:
+      - run: sudo apt update
       - run: sudo apt install -y wget=<< parameters.version >>
 
 workflows:
