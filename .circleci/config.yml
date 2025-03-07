@@ -51,10 +51,15 @@ commands:
     parameters:
       version:
         type: string
-        default: "1.21.2-2ubuntu1"
+        default: ""
     steps:
       - run: sudo apt update
-      - run: sudo apt install -y wget=<< parameters.version >>
+      - run: |
+          if [ -z "<< parameters.version >>" ]; then
+            sudo apt install -y wget  # Install the latest version
+          else
+            sudo apt install -y wget=<< parameters.version >> || sudo apt install -y wget  # Fallback to latest if version is unavailable
+          fi
 
 workflows:
   build_workflow:
